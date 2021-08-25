@@ -17,6 +17,7 @@ else:
 
 
 app = Flask(__name__)
+import upload #upload routes
 
 @app.route('/')
 def index():

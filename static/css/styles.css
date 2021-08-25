@@ -51,6 +51,11 @@ a {
   color: var(--color-primary);
 }
 
+a.active {
+  text-decoration: underline;
+  pointer-events: none;
+}
+
 main {
   padding: 2rem;
 }
@@ -67,6 +72,18 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+video {
+  margin-top: 1rem;
+}
+
+.video-placeholder {
+  margin-top: 1rem;
+  border: 1px dashed var(--color-text);
+  padding: 5rem 4rem;
+  color: var(--color-text);
+  opacity: 0.75;
 }
 
 /* END HOME CONTENT */
