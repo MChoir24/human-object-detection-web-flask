@@ -2,7 +2,9 @@ from __main__ import app
 import os
 from flask import request, redirect, url_for
 from flask.templating import render_template
+from numpy.lib.npyio import save
 from werkzeug.utils import secure_filename
+from tools.object_detection import detection_video
 
 UPLOAD_FOLDER = './static/assets/video'
 ALLOWED_EXTENSIONS = {'3gp', 'mp4', 'ogg'}
@@ -28,6 +30,8 @@ def upload_file():
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename); 
             file.save(filepath)
+            filepath_output = os.path.join(app.config['UPLOAD_FOLDER'], 'output'+filename); 
+            detection_video(filename=filepath, save2=filepath_output)
             return render_template('pages/index.html', filename=filename)
 
     return render_template('pages/index.html', filename=None)

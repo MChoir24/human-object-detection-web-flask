@@ -9,6 +9,7 @@ from .detector import Detector
 
 class Camera(BaseCamera):
     video_source = 0
+    # video_source = 'uploads/videos/input/video.mp4'
     height = None
     width = None
     model_path = 'tools/faster_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'

@@ -19,7 +19,7 @@ else:
 app = Flask(__name__)
 import upload #upload routes
 
-@app.route('/')
+@app.route('/live-video')
 def index():
     """Video streaming home page."""
     return render_template('pages/index.html')
