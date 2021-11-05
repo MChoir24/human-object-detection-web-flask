@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 from importlib import import_module
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, send_file
 from PIL import Image
+from flask.helpers import url_for
 from tools.detector import Detector
 
 import io
@@ -22,7 +23,7 @@ import upload #upload routes
 @app.route('/live-video')
 def index():
     """Video streaming home page."""
-    return render_template('pages/index.html')
+    return render_template('pages/live_video.html')
 
 
 def gen(camera):
@@ -40,6 +41,11 @@ def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/download/data-live')
+def download():
+    path = './static/data/data_live.csv'
+    return send_file(path, as_attachment=True)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 from __main__ import app
 import os
-from flask import request, redirect, url_for
+from flask import request, redirect, send_file
 from flask.templating import render_template
 from numpy.lib.npyio import save
 from werkzeug.utils import secure_filename
@@ -27,11 +27,29 @@ def upload_file():
         if file.filename == '':
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            filename = secure_filename(file.filename) # get secured filename
+
+            file_ex = filename.rsplit('.', 1)[1].lower() # get extention file
+            re_filename = 'video.'+file_ex 
+
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename); 
             file.save(filepath)
-            filepath_output = os.path.join(app.config['UPLOAD_FOLDER'], 'output'+filename); 
-            detection_video(filename=filepath, save2=filepath_output)
-            return render_template('pages/index.html', filename=filename)
+
+            re_filepath = os.path.join(app.config['UPLOAD_FOLDER'], re_filename); 
+            os.rename(filepath, re_filepath) # rename file
+
+            filepath_output = os.path.join(app.config['UPLOAD_FOLDER'], 'output.avi')
+            detection_video(filename=re_filepath, save2=filepath_output)
+            return render_template('pages/index.html', filename=re_filename)
 
     return render_template('pages/index.html', filename=None)
+
+@app.route('/download/data')
+def download_data():
+    path = './static/data/data.csv'
+    return send_file(path, as_attachment=True)
+
+@app.route('/download/output-video')
+def download_video():
+    path = './static/assets/video/output.avi'
+    return send_file(path)

@@ -10,13 +10,14 @@
     <div>
       <input type="file" name="file"/>
     </div>
-    <button type="submit">Upload</button>
+    <button type="submit" id="klicked">Upload</button>
   </form>
-
+    <div id="loader" class="center"></div>
   <div class="video-container">
   {% if filename %}
     <video width="360" controls>
       <source src="/static/assets/video/{{ filename }}" type="video/mp4" />
+      <source src="/static/assets/video/{{ filename }}" type="video/webm" />
       Your browser does not support HTML video.
     </video>
     {% else %}
@@ -26,4 +27,10 @@
     {% endif %}
   </div>
 </section>
+{% if filename %}
+    <br>
+    <a href="download/data">Download data.csv</a>
+    <br>
+    <a href="download/output-video">Download video hasil deteksi</a>
+{% endif %}
 {% endblock %}

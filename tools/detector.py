@@ -42,8 +42,8 @@ class Detector:
             [self.detection_boxes, self.detection_scores, self.detection_classes, self.num_detections],
             feed_dict={self.image_tensor: image_np_expanded})
         end_time = time.time()
-
-        print("Elapsed Time:", end_time-start_time)
+        elapsed_time = end_time-start_time
+        print("Elapsed Time:", elapsed_time)
 
         im_height, im_width,_ = image.shape
         boxes_list = [None for i in range(boxes.shape[1])]
@@ -53,7 +53,7 @@ class Detector:
                         int(boxes[0,i,2] * im_height),
                         int(boxes[0,i,3]*im_width))
 
-        return boxes_list, scores[0].tolist(), [int(x) for x in classes[0].tolist()], int(num[0])
+        return boxes_list, scores[0].tolist(), [int(x) for x in classes[0].tolist()], int(num[0]), elapsed_time
 
     def close(self):
         self.sess.close()

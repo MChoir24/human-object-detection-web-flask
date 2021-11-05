@@ -16,7 +16,7 @@
       <nav>
         <ul>
           <li><a class="{% if request.path == '/' %} active {% endif %}" href="/">Upload Video</a></li>
-          <li><a href="/">Live Video</a></li>
+          <li><a href="/live-video">Live Video</a></li>
         </ul>
       </nav>
     </header>
@@ -24,5 +24,7 @@
     <footer>
         <p>Made with ❤️ by Team.</p>
     </footer>
+
+     <script src="{{ url_for('static', filename='js/app.js') }}"></script> 
   </body>
 </html>
